@@ -1,0 +1,6 @@
+django
+celery
+redis
+flower
+psycopg2-binary
+watchfiles
