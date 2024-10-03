@@ -5,3 +5,6 @@ flower
 psycopg2-binary
 watchfiles
 requests
+daphne
+channels
+channels-redis

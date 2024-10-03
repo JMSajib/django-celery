@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -68,7 +70,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_celery_example.wsgi.application'
+# WSGI_APPLICATION = 'django_celery_example.wsgi.application'
+
+ASGI_APPLICATION = 'django_celery_example.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(os.environ.get("CHANNELS_REDIS", "redis://127.0.0.1:6379/0"))],
+        },
+    },
+}
 
 
 # Database

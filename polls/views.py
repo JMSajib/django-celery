@@ -70,3 +70,19 @@ def webhook_test_async(request):
     task = task_process_notification.delay()
     logger.info(task.id)
     return HttpResponse('pong')
+
+def subscribe_ws(request):
+    """
+    Use Websocket to get notification of Celery task, instead of using ajax polling
+    """
+    if request.method == 'POST':
+        form = YourForm(request.POST)
+        if form.is_valid():
+            task = sample_task.delay(form.cleaned_data['email'])
+            # return the task id so the JS can poll the state
+            return JsonResponse({
+                'task_id': task.task_id,
+            })
+
+    form = YourForm()
+    return render(request, 'form_ws.html', {'form': form})
